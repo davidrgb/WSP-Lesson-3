@@ -9,3 +9,19 @@
 li {
     padding-right: 15px;
 }
+
+.modal-pre-auth {
+    display: block;
+}
+
+.modal-post-auth {
+    display: none;
+}
+
+input {
+    display: block;
+    margin: 8px 0;
+    padding: 8px 2px;
+    border-width: 0 0 2px 0;
+    width: 100%;
+}

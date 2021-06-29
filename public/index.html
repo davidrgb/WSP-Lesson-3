@@ -28,23 +28,50 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <button id="menu-signin" class="btn btn-outline-danger">Sign In/Up</button>
+                        <button id="menu-signin" class="btn btn-outline-danger modal-pre-auth" data-bs-toggle="modal"
+                            data-bs-target="#modal-signin">Sign In/Up</button>
                     </li>
                     <li class="nav-item">
                         <button id="menu-home" class="btn btn-outline-primary">Home</button>
                     </li>
                     <li class="nav-item">
-                        <button id="menu-purchases" class="btn btn-outline-primary">Purchases</button>
+                        <button id="menu-purchases" class="btn btn-outline-primary modal-post-auth">Purchases</button>
                     </li>
                     <li class="nav-item">
-                        <button id="menu-signout" class="btn btn-outline-danger">Sign Out</button>
+                        <button id="menu-signout" class="btn btn-outline-danger modal-post-auth">Sign Out</button>
                     </li>
                 </ul>
-                <button class="btn btn-outline-success">Cart</button>
-                <button class="btn btn-outline-success">Profile</button>
+                <button id="menu-cart" class="btn btn-outline-success modal-post-auth">Cart</button>
+                <button id="menu-profile" class="btn btn-outline-success modal-post-auth">Profile</button>
             </div>
         </div>
     </nav>
+
+    <!-- Modal: Sign In -->
+    <div class="modal fade" id="modal-signin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="modal-signin-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-signin-label">Sign In, Please!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-signin" method="post">
+                        <div>
+                            <input type="email" name="email" placeholder="email address">
+                        </div>
+                        <div>
+                            <input type="password" name="password" placeholder="enter password">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-outline-primary">Sign In</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/8.6.8/firebase-app.js"></script>
