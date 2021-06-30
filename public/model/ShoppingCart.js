@@ -1,3 +1,5 @@
+import { Product } from "./Product.js";
+
 export class ShoppingCart {
 
     constructor(uid) {
@@ -16,6 +18,7 @@ export class ShoppingCart {
             ++product.qty;
             ++item.qty;
         }
+        this.saveToLocalStorage();
     }
 
     removeItem(product) {
@@ -27,6 +30,32 @@ export class ShoppingCart {
         if (product.qty == 0) {
             this.items.splice(index, 1);
         }
+        this.saveToLocalStorage();
+    }
+
+    saveToLocalStorage() {
+        window.localStorage.setItem(`cart-${this.uid}`, this.stringify());
+    }
+
+    stringify() {
+        return JSON.stringify({uid: this.uid, items: this.items});
+    }
+
+    static parse(cartString) {
+        if (!cartString) return null;
+        const obj = JSON.parse(cartString);
+        const sc = new ShoppingCart(obj.uid);
+        sc.items = obj.items;
+        return sc;
+    }
+
+    isValid() {
+        if (!this.uid) return false;
+        if (!this.items || !Array.isArray(this.items)) return false;
+        for (let i = 0; i < this.items.length; i++) {
+            if (!Product.isSerializedProduct(this.items[i])) return false;
+        }
+        return true;
     }
 
     getTotalQty() {

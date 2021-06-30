@@ -24,6 +24,12 @@ export async function home_page() {
     let products;
     try {
         products = await FirebaseController.getProductList();
+        if (cart) {
+            cart.items.forEach(item => {
+                const product = products.find(p => item.docId == p.docId)
+                product.qty = item.qty;
+            })
+        }
     } catch (e) {
         if (Constant.DEV) console.log(e);
         Util.info('Cannot get product info', JSON.stringify(e));
@@ -88,5 +94,13 @@ function buildProductView(product, index) {
 }
 
 export function initShoppingCart() {
-    cart = new ShoppingCart(Auth.currentUser.uid);
+
+    const cartString = window.localStorage.getItem('cart-' + Auth.currentUser.uid);
+    cart = ShoppingCart.parse(cartString);
+    if (!cart || !cart.isValid() || cart.uid != Auth.currentUser.uid) {
+        window.localStorage.removeItem('cart-' + Auth.currentUser.uid);
+        cart = new ShoppingCart(Auth.currentUser.uid);
+    }
+
+    Element.shoppingCartCount.innerHTML = cart.getTotalQty();
 }
