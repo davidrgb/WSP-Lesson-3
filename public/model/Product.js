@@ -1,6 +1,6 @@
 export class Product {
     constructor(data) {
-        this.name = data.name.toLowerCae();
+        this.name = data.name.toLowerCase();
         this.price = typeof data.price == 'number' ? data.price : Number(data.price);
         this.summary = data.summary;
         this.imageName = data.imageName;

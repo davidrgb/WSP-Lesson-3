@@ -6,3 +6,7 @@ export function info(title, body, closeModal) {
     Element.modalInfoBody.innerHTML = body;
     Element.modalInfo.show();
 }
+
+export function currency(money) {
+    return new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(money);
+}
