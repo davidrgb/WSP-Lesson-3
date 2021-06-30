@@ -15,7 +15,7 @@ export function addEventListeners() {
 
 }
 
-let cart;
+export let cart;
 
 export async function home_page() {
 
