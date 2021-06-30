@@ -1,3 +1,6 @@
+// ROOT
+export const root = document.getElementById('root');
+
 // top menus
 export const menuSignIn = document.getElementById('menu-signin');
 export const menuHome = document.getElementById('menu-home');
