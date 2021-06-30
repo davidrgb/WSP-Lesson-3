@@ -3,6 +3,7 @@ import * as Element from '../viewpage/element.js'
 import * as Util from '../viewpage/util.js'
 import * as Constant from '../model/constant.js'
 import * as Route from './route.js'
+import * as Home from '../viewpage/home_page.js'
 
 export let currentUser;
 
@@ -33,6 +34,9 @@ export function addEventListeners() {
     firebase.auth().onAuthStateChanged(async user => {
         if (user) {
             currentUser = user;
+
+            Home.initShoppingCart();
+
             let elements = document.getElementsByClassName('modal-pre-auth');
             for (let i = 0; i < elements.length; i++) {
                 elements[i].style.display = 'none';

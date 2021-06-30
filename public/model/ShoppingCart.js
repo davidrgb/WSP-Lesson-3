@@ -28,4 +28,10 @@ export class ShoppingCart {
             this.items.splice(index, 1);
         }
     }
+
+    getTotalQty() {
+        let n = 0;
+        this.items.forEach(e => {n += e.qty})
+        return n;
+    }
 }
