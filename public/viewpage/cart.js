@@ -72,4 +72,17 @@ export async function cart_page() {
         history.pushState(null, null, Route.routePathnames.HOME);
         await Home.home_page();
     })
+
+    const checkoutButton = document.getElementById('button-checkout');
+    checkoutButton.addEventListener('click', async () => {
+        const label = Util.disableButton(checkoutButton);
+        //await Util.sleep(1000);
+        Util.info('Success!', 'Checkout Complete');
+        window.localStorage.removeItem(`cart-${Auth.currentUser.uid}`);
+        cart.empty();
+        Element.shoppingCartCount.innerHTML = '0';
+        history.pushState(null, null, Route.routePathnames.HOME);
+        await Home.home_page();
+        Util.enableButton(checkoutButton, label);
+    })
 }

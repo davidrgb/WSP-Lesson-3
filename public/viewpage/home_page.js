@@ -10,7 +10,9 @@ export function addEventListeners() {
 
     Element.menuHome.addEventListener('click', async () => {
         history.pushState(null, null, Route.routePathnames.HOME);
+        const label = Util.disableButton(Element.menuHome);
         await home_page();
+        Util.enableButton(Element.menuHome, label);
     })
 
 }
