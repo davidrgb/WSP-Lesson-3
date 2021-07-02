@@ -70,6 +70,10 @@
                             <button type="submit" class="btn btn-outline-primary">Sign In</button>
                         </div>
                     </form>
+                    <div>
+                        No account yet?
+                        <button id="button-signup" class="btn btn-outline-info">Create New Account</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,6 +106,34 @@
                 <div class="modal-body" id="modal-transaction-body"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Sign Up -->
+    <div class="modal fade" id="modal-signup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="modal-signup-title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-signup-title">Create A New Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-signup" method="post">
+                        <div>
+                            <input type="email" name="email" placeholder="email address" required>
+                        </div>
+                        <div>
+                            <input type="password" name="password" placeholder="password" required minlength="6">
+                        </div>
+                        <div>
+                            <input type="password" name="passwordConfirm" placeholder="passwordConfirm" required minlength="6">
+                            <p id="form-signup-password-error" style="color: red;"></p>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary">Create</button>
+                    </form>
                 </div>
             </div>
         </div>

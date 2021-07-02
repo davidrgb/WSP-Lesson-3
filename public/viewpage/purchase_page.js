@@ -9,7 +9,9 @@ export function addEventListeners() {
 
     Element.menuPurchases.addEventListener('click', async () => {
         history.pushState(null, null, Route.routePathnames.PURCHASE);
+        const label = Util.disableButton(Element.menuPurchases);
         await purchase_page();
+        Util.enableButton(Element.menuPurchases, label);
     })
 
 }

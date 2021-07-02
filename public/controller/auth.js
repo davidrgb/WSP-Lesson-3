@@ -67,4 +67,11 @@ export function addEventListeners() {
         }
     });
 
+    Element.buttonSignup.addEventListener('click', () => {
+        Element.modalSignIn.hide();
+        Element.formSignup.reset();
+        Element.formSignupPasswordError.innerHTML = '';
+        Element.modalSignup.show();
+    })
+
 }
