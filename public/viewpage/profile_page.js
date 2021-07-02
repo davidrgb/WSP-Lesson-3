@@ -154,19 +154,68 @@ export async function profile_page() {
 
     Element.root.innerHTML = html;
 
+    let photoFile;
+
+    const updateProfilePhotoButton = document.getElementById('profile-photo-update-button');
+    updateProfilePhotoButton.addEventListener('click', async () => {
+        if (!photoFile) {
+            Util.info('No Photo Selected', 'Choose a profile photo');
+            return;
+        }
+        const label = Util.disableButton(updateProfilePhotoButton);
+
+        try {
+            const photoURL = await FirebaseController.uploadProfilePhoto(photoFile, Auth.currentUser.uid);
+            await FirebaseController.updateAccountInfo(Auth.currentUser.uid, {photoURL});
+            accountInfo.photoURL = photoURL;
+            Element.menuProfile.innerHTML = `
+                <img src=${accountInfo.photoURL} class="rounded-circle" height="30px">
+            `;
+            Util.info('Success!', 'Profile Photo Updated!');
+        } catch (e) {
+            if (Constant.DEV) console.log(e);
+            Util.info('Photo update error', JSON.stringify(e));
+        }
+
+        Util.enableButton(updateProfilePhotoButton, label);
+    });
+
+    document.getElementById('profile-photo-upload-button').addEventListener('change', e => {
+        photoFile = e.target.files[0];
+        if (!photoFile) {
+            document.getElementById('profile-img-tag').src = accountInfo.photoURL;
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => document.getElementById('profile-img-tag').src = reader.result;
+        reader.readAsDataURL(photoFile);
+    })
+
     const forms = document.getElementsByClassName('form-profile');
     for (let i = 0; i < forms.length; i++) {
-        forms[i].addEventListener('submit', e => {
+        forms[i].addEventListener('submit', async e => {
             e.preventDefault();
             const buttons = e.target.getElementsByTagName('button');
             const inputTag = e.target.getElementsByTagName('input')[0];
             const buttonLabel = e.target.submitter;
+            const key = inputTag.name;
+            const value = inputTag.value;
             if (buttonLabel == 'Edit') {
                 buttons[0].style.display = 'none';
                 buttons[1].style.display = 'inline-block';
                 buttons[2].style.display = 'inline-block';
                 inputTag.disabled = false;
             } else if (buttonLabel == 'Update') {
+                const updateInfo = {};
+                updateInfo[key] = value;
+                try {
+                    await FirebaseController.updateAccountInfo(Auth.currentUser.uid, updateInfo);
+                    accountInfo[key] = value;
+                } catch (e) {
+                    if (Constant.DEV) console.log(e);
+                    Util.info(`Update Error: ${key}`, JSON.stringify(e));
+                }
+
                 buttons[0].style.display = 'inline-block';
                 buttons[1].style.display = 'none';
                 buttons[2].style.display = 'none';
@@ -177,6 +226,7 @@ export async function profile_page() {
                 buttons[1].style.display = 'none';
                 buttons[2].style.display = 'none';
                 inputTag.disabled = true;
+                inputTag.value = accountInfo[key];
             }
         })
     }

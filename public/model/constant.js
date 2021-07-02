@@ -5,3 +5,7 @@ export const collectionNames = {
     PURCHASE_HISTORY: 'purchase_history',
     ACCOUNT_INFO: 'account_info',
 }
+
+export const storageFolderName = {
+    PROFILE_PHOTOS: 'profile_photos/',
+}
