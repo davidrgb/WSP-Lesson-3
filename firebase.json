@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "a3p1abcxyzlorem",
+    "site": "a3p2abcxyzlorem",
     "public": "public",
     "ignore": [
       "firebase.json",

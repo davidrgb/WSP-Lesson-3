@@ -208,6 +208,7 @@ export async function profile_page() {
             } else if (buttonLabel == 'Update') {
                 const updateInfo = {};
                 updateInfo[key] = value;
+                const label = Util.disableButton(buttons[1]);
                 try {
                     await FirebaseController.updateAccountInfo(Auth.currentUser.uid, updateInfo);
                     accountInfo[key] = value;
@@ -215,6 +216,7 @@ export async function profile_page() {
                     if (Constant.DEV) console.log(e);
                     Util.info(`Update Error: ${key}`, JSON.stringify(e));
                 }
+                Util.enableButton(buttons[1], label);
 
                 buttons[0].style.display = 'inline-block';
                 buttons[1].style.display = 'none';
