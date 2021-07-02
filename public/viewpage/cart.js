@@ -3,6 +3,8 @@ import * as Route from '../controller/route.js'
 import * as Auth from '../controller/auth.js'
 import * as Home from './home_page.js'
 import * as Util from './util.js'
+import * as FirebaseController from '../controller/firebase_controller.js'
+import * as Constant from '../model/constant.js'
 
 export function addEventListeners() {
 
@@ -76,13 +78,20 @@ export async function cart_page() {
     const checkoutButton = document.getElementById('button-checkout');
     checkoutButton.addEventListener('click', async () => {
         const label = Util.disableButton(checkoutButton);
-        //await Util.sleep(1000);
-        Util.info('Success!', 'Checkout Complete');
-        window.localStorage.removeItem(`cart-${Auth.currentUser.uid}`);
-        cart.empty();
-        Element.shoppingCartCount.innerHTML = '0';
-        history.pushState(null, null, Route.routePathnames.HOME);
-        await Home.home_page();
+        try {
+            await FirebaseController.checkOut(cart);
+            Util.info('Success!', 'Checkout Complete');
+            window.localStorage.removeItem(`cart-${Auth.currentUser.uid}`);
+            cart.empty();
+            Element.shoppingCartCount.innerHTML = '0';
+            history.pushState(null, null, Route.routePathnames.HOME);
+            await Home.home_page();
+        } catch (e) {
+            if (Constant.DEV) console.log(e);
+            Util.info('Checkout error', JSON.stringify(e));
+        }
         Util.enableButton(checkoutButton, label);
+
+        
     })
 }
