@@ -38,7 +38,7 @@ export function addEventListeners() {
     firebase.auth().onAuthStateChanged(async user => {
         if (user) {
             currentUser = user;
-            Profile.getAccountInfo(user);
+            await Profile.getAccountInfo(user);
 
             Home.initShoppingCart();
 
