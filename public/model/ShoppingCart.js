@@ -7,6 +7,10 @@ export class ShoppingCart {
         this.items = [];
     }
 
+    serialize(timestamp) {
+        return {uid: this.uid, items: this.items, timestamp};
+    }
+
     addItem(product) {
         const item = this.items.find(e => product.docId == e.docId);
         if (!item) {
@@ -42,11 +46,16 @@ export class ShoppingCart {
     }
 
     static parse(cartString) {
-        if (!cartString) return null;
-        const obj = JSON.parse(cartString);
-        const sc = new ShoppingCart(obj.uid);
-        sc.items = obj.items;
-        return sc;
+        try {
+            if (!cartString) return null;
+            const obj = JSON.parse(cartString);
+            const sc = new ShoppingCart(obj.uid);
+            sc.items = obj.items;
+            return sc;
+        }
+        catch (e) {
+            return null;
+        }
     }
 
     isValid() {
